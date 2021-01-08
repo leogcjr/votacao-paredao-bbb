@@ -11,7 +11,6 @@ import com.globo.votacaoparedao.dto.*;
 import com.globo.votacaoparedao.entity.*;
 import com.globo.votacaoparedao.exception.BusinessException;
 import com.globo.votacaoparedao.exception.NotFoundException;
-import com.globo.votacaoparedao.integration.CpfService;
 import com.globo.votacaoparedao.repository.ParedaoRepository;
 import com.globo.votacaoparedao.repository.VotacaoRepository;
 
@@ -26,17 +25,15 @@ public class VotacaoServiceImpl implements VotacaoService {
     private final ParedaoRepository paredaoRepository;
     private final ModelMapper modelMapper;
     private final Environment environment;
-    private final CpfService cpfService;
     private final MessagingService messagingService;
 
     @Autowired
     public VotacaoServiceImpl(VotacaoRepository votacaoRepository, ModelMapper modelMapper, ParedaoRepository paredaoRepository,
-                             Environment environment, CpfService cpfService, MessagingService messagingService) {
+                             Environment environment, MessagingService messagingService) {
         this.votacaoRepository = votacaoRepository;
         this.paredaoRepository = paredaoRepository;
         this.modelMapper = modelMapper;
         this.environment = environment;
-        this.cpfService = cpfService;
         this.messagingService = messagingService;
     }
 
@@ -93,8 +90,8 @@ public class VotacaoServiceImpl implements VotacaoService {
         List<Voto> votes = voting.getVotes();
 
         ContadorVotos voteCount = new ContadorVotos(
-                votes.stream().filter(vote -> vote.getAnswer().equals(Pergunta.YES)).count(),
-                votes.stream().filter(vote -> vote.getAnswer().equals(Pergunta.NO)).count()
+                votes.stream().filter(vote -> vote.getAnswer().equals(Pergunta.Canditado_A)).count(),
+                votes.stream().filter(vote -> vote.getAnswer().equals(Pergunta.Canditado_B)).count()
         );
 
         VotacaoResultadoResponseDto resultResponseDto = new VotacaoResultadoResponseDto();
@@ -113,11 +110,9 @@ public class VotacaoServiceImpl implements VotacaoService {
         if (voting.isExpired())
             throw new BusinessException("A votação já expirou.");
 
-        if (voting.cpfAlreadyVoted(dto.getCpf()))
-            throw new BusinessException("O CPF ("+dto.getCpf()+") j[a votou.");
+        if (voting.validaVotoPorMinuto(dto.getCpf()))
+            throw new BusinessException("O CPF ("+dto.getCpf()+") ultrapassou a quantidade de 10 votos por minuto.");
 
-        if (cpfService.isAbleToVote(dto.getCpf()))
-            throw new BusinessException("CPF não pode votar.");
     }
 
     @Scheduled(fixedDelay = 1000)

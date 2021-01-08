@@ -39,7 +39,7 @@ public class ParedaoServiceImpl implements ParedaoService {
     @Override
     public ParedaoResponseDto getParedao(String id) {
         Paredao paredao = this.paredaoRepository.findById(new ObjectId(id)).
-                orElseThrow(() -> new NotFoundException("paredao not found."));
+                orElseThrow(() -> new NotFoundException("paredao nao encontrado."));
 
         return modelMapper.map(paredao, ParedaoResponseDto.class);
     }

@@ -2,8 +2,8 @@ package com.globo.votacaoparedao.entity;
 
 public enum Pergunta {
 
-    NO("Não"),
-    YES("Sim");
+    Canditado_A("Canditado A"),
+    Canditado_B("Canditado B");
 
     private String answer;
 

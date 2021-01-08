@@ -1,27 +1,27 @@
 package com.globo.votacaoparedao.entity;
 
 public class ContadorVotos {
-    private Long yes;
-    private Long no;
+    private Long candidato_A;
+    private Long candidato_B;
 
-    public ContadorVotos(Long yes, Long no) {
-        this.yes = yes;
-        this.no = no;
+    public ContadorVotos(Long candidato_A, Long no) {
+        this.candidato_A = candidato_A;
+        this.candidato_B = no;
     }
 
-    public Long getYes() {
-        return yes;
+    public Long getCandidato_A() {
+        return candidato_A;
     }
 
-    public void setYes(Long yes) {
-        this.yes = yes;
+    public void setCandidato_A(Long yes) {
+        this.candidato_A = yes;
     }
 
-    public Long getNo() {
-        return no;
+    public Long getCandidato_B() {
+        return candidato_B;
     }
 
-    public void setNo(Long no) {
-        this.no = no;
+    public void setCandidato_B(Long no) {
+        this.candidato_B = no;
     }
 }

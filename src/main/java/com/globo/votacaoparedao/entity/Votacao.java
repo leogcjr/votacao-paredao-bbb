@@ -84,7 +84,7 @@ public class Votacao {
         return this.getExpirationDate().isBefore(Instant.now());
     }
 
-    public boolean cpfAlreadyVoted(String cpf){
+    public boolean validaVotoPorMinuto(String cpf){
         return this.votes.stream().anyMatch(vote -> vote.getCpf().equals(cpf));
     }
 

@@ -18,7 +18,6 @@ import com.globo.votacaoparedao.entity.Votacao;
 import com.globo.votacaoparedao.entity.Voto;
 import com.globo.votacaoparedao.exception.BusinessException;
 import com.globo.votacaoparedao.exception.NotFoundException;
-import com.globo.votacaoparedao.integration.CpfService;
 import com.globo.votacaoparedao.repository.ParedaoRepository;
 import com.globo.votacaoparedao.repository.VotacaoRepository;
 import com.globo.votacaoparedao.service.VotacaoServiceImpl;
@@ -39,9 +38,6 @@ public class VotacaoServiceTest {
 
     @Mock
     public ParedaoRepository agendaRepository;
-
-    @Mock
-    public CpfService cpfService;
 
     @Mock
     public ModelMapper modelMapper;
@@ -136,7 +132,7 @@ public class VotacaoServiceTest {
         Votacao voting2 = new Votacao(agenda, 10);
         voting2.setId(id);
 
-        Voto vote = new Voto("123", Pergunta.NO);
+        Voto vote = new Voto("123", Pergunta.Canditado_B);
         voting2.addVote(vote);
 
         Mockito.when(votingRepository.save(voting)).thenReturn(voting2);
@@ -144,7 +140,7 @@ public class VotacaoServiceTest {
         VotoRequestDto dto = new VotoRequestDto();
         dto.setCpf("123");
         dto.setVotingId(voting2.getId().toHexString());
-        dto.setAnswer(Pergunta.NO);
+        dto.setAnswer(Pergunta.Canditado_B);
 
         VotoResponseDto resp = votingService.addVoto(dto);
 
@@ -165,7 +161,7 @@ public class VotacaoServiceTest {
         VotoRequestDto dto = new VotoRequestDto();
         dto.setCpf("123");
         dto.setVotingId(voting.getId().toHexString());
-        dto.setAnswer(Pergunta.NO);
+        dto.setAnswer(Pergunta.Canditado_B);
         votingService.addVoto(dto);
     }
 
@@ -176,7 +172,7 @@ public class VotacaoServiceTest {
         agenda.setId(id);
 
         Votacao voting = new Votacao(new Paredao("test"), 10);
-        voting.addVote(new Voto("1", Pergunta.NO));
+        voting.addVote(new Voto("1", Pergunta.Canditado_B));
 
         Mockito.when(votingRepository.findById(id)).thenReturn(java.util.Optional.of(voting));
 
@@ -190,16 +186,16 @@ public class VotacaoServiceTest {
         agenda.setId(id);
 
         Votacao voting = new Votacao(new Paredao("test"), 1);
-        voting.addVote(new Voto("1", Pergunta.NO));
-        voting.addVote(new Voto("2", Pergunta.NO));
-        voting.addVote(new Voto("3", Pergunta.YES));
+        voting.addVote(new Voto("1", Pergunta.Canditado_B));
+        voting.addVote(new Voto("2", Pergunta.Canditado_B));
+        voting.addVote(new Voto("3", Pergunta.Canditado_A));
         voting.setExpirationDate(Instant.now().minusSeconds(10));
 
         Mockito.when(votingRepository.findById(id)).thenReturn(java.util.Optional.of(voting));
 
         VotacaoResultadoResponseDto resp = votingService.getResultadoVotacao(id.toHexString());
 
-        assertEquals(2, resp.getVoteCount().getNo());
-        assertEquals(1, resp.getVoteCount().getYes());
+        assertEquals(2, resp.getVoteCount().getCandidato_B());
+        assertEquals(1, resp.getVoteCount().getCandidato_A());
     }
 }

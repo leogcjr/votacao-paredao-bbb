@@ -36,11 +36,11 @@ public class VotacaoTest {
     public void shouldValidateCpfAlreadyVoted(){
         Votacao voting = new Votacao();
 
-        voting.addVote(new Voto("111", Pergunta.NO));
-        voting.addVote(new Voto("222", Pergunta.YES));
-        voting.addVote(new Voto("111", Pergunta.YES));
+        voting.addVote(new Voto("111", Pergunta.Canditado_B));
+        voting.addVote(new Voto("222", Pergunta.Canditado_A));
+        voting.addVote(new Voto("111", Pergunta.Canditado_A));
 
-        assertTrue(voting.cpfAlreadyVoted("111"));
+        assertTrue(voting.validaVotoPorMinuto("111"));
     }
 
 }

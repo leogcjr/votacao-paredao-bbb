@@ -18,10 +18,10 @@ public class MessagingServiceImpl implements MessagingService {
 
     @Override
     public void send(VotacaoResultadoResponseDto votingResult) {
-        producer.send(String.format("Agenda '%s' closed! Votes: [Yes= %d] ~ [No= %d]",
+        producer.send(String.format("Paredao '%s' Finalizado! Votos: [Canditado A = %d] ~ [Canditado B = %d]",
                 votingResult.getAgenda().getName(),
-                votingResult.getVoteCount().getYes(),
-                votingResult.getVoteCount().getNo()
+                votingResult.getVoteCount().getCandidato_A(),
+                votingResult.getVoteCount().getCandidato_B()
         ));
     }
 }
