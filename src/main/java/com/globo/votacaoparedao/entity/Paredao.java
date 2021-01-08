@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
-@Document(collection = "agenda")
+@Document(collection = "paredao")
 public class Paredao {
 
     @Id
@@ -38,9 +38,9 @@ public class Paredao {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Paredao agenda = (Paredao) o;
-        return Objects.equals(id, agenda.id) &&
-                Objects.equals(name, agenda.name);
+        Paredao paredao = (Paredao) o;
+        return Objects.equals(id, paredao.id) &&
+                Objects.equals(name, paredao.name);
     }
 
     @Override

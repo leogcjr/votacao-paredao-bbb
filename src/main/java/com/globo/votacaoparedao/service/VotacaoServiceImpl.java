@@ -95,7 +95,7 @@ public class VotacaoServiceImpl implements VotacaoService {
         );
 
         VotacaoResultadoResponseDto resultResponseDto = new VotacaoResultadoResponseDto();
-        resultResponseDto.setAgenda(modelMapper.map(voting.getAgenda(), ParedaoResponseDto.class));
+        resultResponseDto.setAgenda(modelMapper.map(voting.getParedao(), ParedaoResponseDto.class));
         resultResponseDto.setVoteCount(voteCount);
 
         return resultResponseDto;

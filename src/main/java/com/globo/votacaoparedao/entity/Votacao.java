@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Document(collection = "voting")
+@Document(collection = "votacao")
 public class Votacao {
 
     @Id
     private ObjectId id;
 
-    private Paredao agenda;
+    private Paredao paredao;
 
     private Integer minutesToExpiration;
 
@@ -30,7 +30,7 @@ public class Votacao {
     }
 
     public Votacao(Paredao agenda, Integer minutesToExpiration) {
-        this.agenda = agenda;
+        this.paredao = agenda;
         this.minutesToExpiration = minutesToExpiration;
         this.expirationDate = Instant.now().plusSeconds(minutesToExpiration * 60);
         this.votes = new ArrayList<>();
@@ -44,12 +44,12 @@ public class Votacao {
         this.id = id;
     }
 
-    public Paredao getAgenda() {
-        return agenda;
+    public Paredao getParedao() {
+        return paredao;
     }
 
-    public void setAgenda(Paredao agenda) {
-        this.agenda = agenda;
+    public void setParedao(Paredao paredao) {
+        this.paredao = paredao;
     }
 
     public Integer getMinutesToExpiration() {
